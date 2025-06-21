@@ -1,0 +1,36 @@
+// Legacy Bot Script (from API.txt) – Now integrated into main.js
+
+const chatContent = document.getElementById("chat-content");
+const chatForm = document.getElementById("chat-form");
+const userInput = document.getElementById("user-input");
+
+function createMessageElement(message, fromUser) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("chat-message", fromUser ? "user-message" : "assistant-message");
+  messageElement.textContent = message;
+  return messageElement;
+}
+
+async function fetchResponse(userMessage) {
+  const response = await fetch("https://backend.buildpicoapps.com/aero/run/llm-api?pk=YOUR_API_KEY", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: userMessage })
+  });
+
+  if (!response.ok) return "Error: Bad request.";
+  const data = await response.json();
+  return data.status === "success" ? data.text : "Bot error.";
+}
+
+chatForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const userMessage = userInput.value.trim();
+  if (!userMessage) return;
+
+  chatContent.appendChild(createMessageElement(userMessage, true));
+  userInput.value = "";
+
+  const botReply = await fetchResponse(userMessage);
+  chatContent.appendChild(createMessageElement(botReply, false));
+});
