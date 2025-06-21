@@ -26,8 +26,6 @@ A sleek, responsive, and voice-enabled web-based chat assistant powered by a lar
 - Type or speak a message and receive intelligent responses in real time.  
 - ✨ Enjoy the UI with toggled themes and smooth animations.
 
-![screenshot-placeholder](https://via.placeholder.com/800x400?text=Chat+UI+Preview)
-
 🔐 API Info:
 
 This project uses the following LLM API:
@@ -39,7 +37,7 @@ You must obtain your own API key and replace it in `main.js`.
 Voice input works on most modern browsers (Chrome recommended).
 Ensure microphone permissions are allowed.
 
-📦 Dependencies
+📦 Dependencies:
 
 - [Google Fonts Material Icons](https://fonts.google.com/icons)
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) (for voice recognition/output)
