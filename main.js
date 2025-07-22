@@ -6,6 +6,7 @@ const clearButton = document.getElementById("clearChat");
 const voiceButton = document.getElementById("voiceButton");
 const themeToggle = document.getElementById("toggleTheme");
 const typingIndicator = document.getElementById("typingIndicator");
+const listeningIndicator = document.getElementById("listeningIndicator");
 
 // API Keys (replace with your own if needed)
 const apiKey = "v1-Z0FBQUFBQm5HUEtMSjJkakVjcF9IQ0M0VFhRQ0FmSnNDSHNYTlJSblE0UXo1Q3RBcjFPcl9YYy1OZUhteDZWekxHdWRLM1M1alNZTkJMWEhNOWd4S1NPSDBTWC12M0U2UGc9PQ==";
@@ -53,10 +54,25 @@ if (recognition) {
   const mic = new recognition();
   mic.lang = "en-US";
   mic.interimResults = false;
+  
+  mic.onstart = () => {
+    listeningIndicator.style.display = "block";
+  };
+  
   mic.onresult = e => {
     const transcript = e.results[0][0].transcript;
     chatInput.value = transcript;
+    listeningIndicator.style.display = "none";
   };
+  
+  mic.onerror = () => {
+    listeningIndicator.style.display = "none";
+  };
+  
+  mic.onend = () => {
+    listeningIndicator.style.display = "none";
+  };
+  
   voiceButton.addEventListener("click", () => mic.start());
 }
 
