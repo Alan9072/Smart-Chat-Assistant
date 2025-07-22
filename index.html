@@ -9,19 +9,19 @@
 </head>
 <body>
   <header class="header">
-    <span>🤖 Chat Assistant</span>
+    <span class="logo">🤖 Chat Assistant</span>
     <div class="header-controls">
-      <button id="toggleTheme" title="Toggle Dark Mode">
+      <button id="toggleTheme" title="Toggle Dark Mode" aria-label="Toggle Light/Dark Mode">
         <span class="material-icons">brightness_6</span>
       </button>
-      <button id="clearChat" title="Clear Chat">
+      <button id="clearChat" title="Clear Chat" aria-label="Clear Chat">
         <span class="material-icons">delete</span>
       </button>
     </div>
   </header>
 
   <main class="container">
-    <section id="chatbox" class="chatbox">
+    <section id="chatbox" class="chatbox" role="log" aria-live="polite">
       <div id="welcomeMessage" class="welcome-message">
         <div class="welcome-icon">💬</div>
         <h3>Welcome to Smart Chat Assistant!</h3>
@@ -31,16 +31,16 @@
     </section>
 
     <div class="input-area">
-      <button id="voiceButton" title="Voice Input">
+      <button id="voiceButton" title="Voice Input" aria-label="Voice Input">
         <span class="material-icons">mic</span>
       </button>
-      <input id="chatInput" type="text" placeholder="Type your message or use voice..." />
-      <button id="sendButton" title="Send Message">
+      <span id="listeningIndicator" class="listening-indicator" aria-live="polite">Listening...</span>
+      <input id="chatInput" type="text" placeholder="Type your message or use voice..." aria-label="Chat Input" />
+      <button id="sendButton" title="Send Message" aria-label="Send Message">
         <span class="material-icons">send</span>
       </button>
     </div>
-    <div id="listeningIndicator" class="listening-indicator">Listening...</div>
-    <div id="typingIndicator" class="typing-indicator">Bot is typing...</div>
+    <div id="typingIndicator" class="typing-indicator" aria-live="polite">Bot is typing...</div>
   </main>
 
   <script src="main.js"></script>

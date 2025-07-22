@@ -69,11 +69,6 @@ clearButton.addEventListener("click", () => {
   showWelcomeMessage();
 });
 
-// === Theme Toggle ===
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-
 // === Voice Input ===
 const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 if (recognition) {
@@ -147,6 +142,22 @@ chatInput.addEventListener("keydown", e => {
   if (e.key === "Enter") sendButton.click();
 });
 
-// === Initial Load ===
-loadHistory();
-checkWelcomeVisibility();
+// === Theme Toggle and Persistence ===
+function applySavedTheme() {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+}
+
+themeToggle.addEventListener("click", toggleTheme);
+window.addEventListener("DOMContentLoaded", () => {
+  applySavedTheme();
+  loadHistory();
+  checkWelcomeVisibility();
+});
