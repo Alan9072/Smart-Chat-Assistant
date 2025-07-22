@@ -21,7 +21,14 @@
   </header>
 
   <main class="container">
-    <section id="chatbox" class="chatbox"></section>
+    <section id="chatbox" class="chatbox">
+      <div id="welcomeMessage" class="welcome-message">
+        <div class="welcome-icon">💬</div>
+        <h3>Welcome to Smart Chat Assistant!</h3>
+        <p>Start a conversation by typing a message or using the microphone button.</p>
+        <p>Try asking me anything - I'm here to help! 🤖</p>
+      </div>
+    </section>
 
     <div class="input-area">
       <button id="voiceButton" title="Voice Input">
@@ -32,6 +39,7 @@
         <span class="material-icons">send</span>
       </button>
     </div>
+    <div id="listeningIndicator" class="listening-indicator">Listening...</div>
     <div id="typingIndicator" class="typing-indicator">Bot is typing...</div>
   </main>
 

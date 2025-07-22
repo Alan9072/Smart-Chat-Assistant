@@ -6,10 +6,30 @@ const clearButton = document.getElementById("clearChat");
 const voiceButton = document.getElementById("voiceButton");
 const themeToggle = document.getElementById("toggleTheme");
 const typingIndicator = document.getElementById("typingIndicator");
+const listeningIndicator = document.getElementById("listeningIndicator");
+const welcomeMessage = document.getElementById("welcomeMessage");
 
 // API Keys (replace with your own if needed)
 const apiKey = "v1-Z0FBQUFBQm5HUEtMSjJkakVjcF9IQ0M0VFhRQ0FmSnNDSHNYTlJSblE0UXo1Q3RBcjFPcl9YYy1OZUhteDZWekxHdWRLM1M1alNZTkJMWEhNOWd4S1NPSDBTWC12M0U2UGc9PQ==";
 const defaultAPI = `https://backend.buildpicoapps.com/aero/run/llm-api?pk=${apiKey}`;
+
+// === Welcome Message Management ===
+function showWelcomeMessage() {
+  welcomeMessage.style.display = "flex";
+}
+
+function hideWelcomeMessage() {
+  welcomeMessage.style.display = "none";
+}
+
+function checkWelcomeVisibility() {
+  const chatMessages = chatbox.querySelectorAll('.chat-message');
+  if (chatMessages.length === 0) {
+    showWelcomeMessage();
+  } else {
+    hideWelcomeMessage();
+  }
+}
 
 // === Load Chat History ===
 function loadHistory() {
@@ -21,14 +41,15 @@ function loadHistory() {
 
 // === Save Chat History ===
 function saveMessage(message, isUser) {
-  const time = new Date().toLocaleTimeString();
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const chatHistory = JSON.parse(localStorage.getItem("chatHistory") || "[]");
   chatHistory.push({ message, sender: isUser ? "user" : "bot", time });
   localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
 }
 
 // === Display Message ===
-function displayMessage(message, isUser, time = new Date().toLocaleTimeString()) {
+function displayMessage(message, isUser, time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) {
+  hideWelcomeMessage();
   const msgElem = document.createElement("div");
   msgElem.className = `chat-message ${isUser ? "user-message" : "assistant-message"}`;
   msgElem.innerHTML = `${message}<div class="timestamp">${time}</div>`;
@@ -39,7 +60,13 @@ function displayMessage(message, isUser, time = new Date().toLocaleTimeString())
 // === Clear Chat ===
 clearButton.addEventListener("click", () => {
   localStorage.removeItem("chatHistory");
-  chatbox.innerHTML = "";
+  chatbox.innerHTML = `<div id="welcomeMessage" class="welcome-message">
+    <div class="welcome-icon">💬</div>
+    <h3>Welcome to Smart Chat Assistant!</h3>
+    <p>Start a conversation by typing a message or using the microphone button.</p>
+    <p>Try asking me anything - I'm here to help! 🤖</p>
+  </div>`;
+  showWelcomeMessage();
 });
 
 // === Theme Toggle ===
@@ -53,10 +80,25 @@ if (recognition) {
   const mic = new recognition();
   mic.lang = "en-US";
   mic.interimResults = false;
+  
+  mic.onstart = () => {
+    listeningIndicator.style.display = "block";
+  };
+  
   mic.onresult = e => {
     const transcript = e.results[0][0].transcript;
     chatInput.value = transcript;
+    listeningIndicator.style.display = "none";
   };
+  
+  mic.onerror = () => {
+    listeningIndicator.style.display = "none";
+  };
+  
+  mic.onend = () => {
+    listeningIndicator.style.display = "none";
+  };
+  
   voiceButton.addEventListener("click", () => mic.start());
 }
 
@@ -107,3 +149,4 @@ chatInput.addEventListener("keydown", e => {
 
 // === Initial Load ===
 loadHistory();
+checkWelcomeVisibility();
