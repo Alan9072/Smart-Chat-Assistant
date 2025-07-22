@@ -83,14 +83,14 @@ body.dark .container {
   align-self: flex-end;
   background-color: #6200ea;
   color: white;
-  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .assistant-message {
   align-self: flex-start;
   background-color: #e0e0e0;
   color: #212121;
-  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
 
 body.dark .assistant-message {
@@ -99,7 +99,7 @@ body.dark .assistant-message {
 }
 
 .timestamp {
-  font-size: 0.7em;
+  font-size: 0.6em;
   opacity: 0.6;
   margin-top: 4px;
   text-align: right;

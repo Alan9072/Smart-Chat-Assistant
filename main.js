@@ -21,14 +21,14 @@ function loadHistory() {
 
 // === Save Chat History ===
 function saveMessage(message, isUser) {
-  const time = new Date().toLocaleTimeString();
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const chatHistory = JSON.parse(localStorage.getItem("chatHistory") || "[]");
   chatHistory.push({ message, sender: isUser ? "user" : "bot", time });
   localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
 }
 
 // === Display Message ===
-function displayMessage(message, isUser, time = new Date().toLocaleTimeString()) {
+function displayMessage(message, isUser, time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) {
   const msgElem = document.createElement("div");
   msgElem.className = `chat-message ${isUser ? "user-message" : "assistant-message"}`;
   msgElem.innerHTML = `${message}<div class="timestamp">${time}</div>`;
