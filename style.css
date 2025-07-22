@@ -171,6 +171,43 @@ body.dark .input-area {
   display: none;
 }
 
+/* Welcome Message */
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #666;
+  padding: 40px 20px;
+}
+
+.welcome-message .welcome-icon {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.welcome-message h3 {
+  color: #6200ea;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+}
+
+.welcome-message p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+body.dark .welcome-message {
+  color: #ccc;
+}
+
+body.dark .welcome-message h3 {
+  color: #bb86fc;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
